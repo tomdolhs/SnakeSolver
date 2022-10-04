@@ -7,13 +7,14 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.Random;
 
 public class Map {
 
-    private int rows = 30;
+    private final int rows = 10;
 
-    private int cols = 30;
+    private final int cols = 10;
 
     private final LinkedList<int[]> snake = new LinkedList<>();
 
@@ -21,17 +22,17 @@ public class Map {
 
     private int direction = 0;
 
-    private IntegerProperty score = new SimpleIntegerProperty(0);
+    private final IntegerProperty score = new SimpleIntegerProperty(0);
 
-    private BooleanProperty over = new SimpleBooleanProperty(true);
+    private final BooleanProperty over = new SimpleBooleanProperty(true);
 
-    private IntegerProperty difficulty = new SimpleIntegerProperty(5);
+    private final IntegerProperty speed = new SimpleIntegerProperty(5);
 
     public Map() {
-        snake.add(new int[]{7, 15});
-        snake.add(new int[]{6, 15});
-        snake.add(new int[]{5, 15});
-        food[0] = cols / 2;
+        snake.add(new int[]{cols / 2 - 2, rows / 2});
+        snake.add(new int[]{cols / 2 - 3, rows / 2});
+        snake.add(new int[]{cols / 2 - 4, rows / 2});
+        food[0] = cols / 2 + 2;
         food[1] = rows / 2;
     }
 
@@ -84,23 +85,25 @@ public class Map {
     private void generateFood() {
         Random random = new Random();
         ArrayList<int[]> valid = new ArrayList<>();
-        for (int x = 0; x < rows; x++) {
-            for (int y = 0; y < cols; y++) {
+        for (int y = 0; y < rows; y++) {
+            for (int x = 0; x < cols; x++) {
                 valid.add(new int[]{x, y});
             }
         }
-        for (int[] part : snake) {
-            valid.remove(part[0] * rows + part[1]);
+        for (int i = 1; i < snake.size(); i++) {
+            valid.set(snake.get(i)[1] * rows + snake.get(i)[0], null);
         }
-        food = valid.get(random.nextInt(valid.size()));
+        valid.removeIf(Objects::isNull);
+        if (valid.size() > 0)
+            food = valid.get(random.nextInt(valid.size()));
     }
 
     public void reset() {
         snake.clear();
-        snake.add(new int[]{7, 15});
-        snake.add(new int[]{6, 15});
-        snake.add(new int[]{5, 15});
-        food[0] = cols / 2;
+        snake.add(new int[]{cols / 2 - 2, rows / 2});
+        snake.add(new int[]{cols / 2 - 3, rows / 2});
+        snake.add(new int[]{cols / 2 - 4, rows / 2});
+        food[0] = cols / 2 + 2;
         food[1] = rows / 2;
         direction = 0;
         over.set(false);
@@ -139,16 +142,12 @@ public class Map {
         return score;
     }
 
-    public void setScore(int score) {
-        this.score.set(score);
+    public IntegerProperty getSpeed() {
+        return speed;
     }
 
-    public IntegerProperty getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(int difficulty) {
-        this.difficulty.set(difficulty);
+    public void setSpeed(int speed) {
+        this.speed.set(speed);
     }
 
 }
