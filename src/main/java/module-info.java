@@ -1,4 +1,4 @@
-module com.example.snakesolver {
+module de.dolhs.tom.snakesolver {
     requires javafx.controls;
-    opens com.example.snakesolver;
+    opens de.dolhs.tom.snakesolver;
 }
