@@ -1,4 +1,4 @@
-package de.dolhs.tom.snakesolver;
+package de.dolhs.tom.snakesolver.model;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;

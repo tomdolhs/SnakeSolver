@@ -1,5 +1,10 @@
-package de.dolhs.tom.snakesolver;
+package de.dolhs.tom.snakesolver.controller;
 
+import de.dolhs.tom.snakesolver.logic.AStar;
+import de.dolhs.tom.snakesolver.logic.Hamilton;
+import de.dolhs.tom.snakesolver.model.Map;
+import de.dolhs.tom.snakesolver.view.SnakeView;
+import de.dolhs.tom.snakesolver.logic.Solver;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -59,7 +64,7 @@ public class SnakeController {
             map.setOver(true);
         else {
             map.reset();
-            solver = new Solver(map);
+            solver = new AStar(map);
             solving.set(true);
             snakeView.setTimeline(new Timeline(new KeyFrame(Duration.millis(Math.max(250 - getMap().getSpeed().get() * 24, 1)), e -> snakeView.draw())));
             snakeView.getTimeline().setCycleCount(Animation.INDEFINITE);

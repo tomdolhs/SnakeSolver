@@ -1,5 +1,6 @@
-package de.dolhs.tom.snakesolver;
+package de.dolhs.tom.snakesolver.view;
 
+import de.dolhs.tom.snakesolver.controller.SnakeController;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
